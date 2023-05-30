@@ -67,3 +67,11 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+img.img-rickmorty{
+  width: 500px ;
+  height: 500px;
+  display: block;
+  margin: auto;
+  place-content: center;
+}

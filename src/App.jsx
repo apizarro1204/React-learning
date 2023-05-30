@@ -1,38 +1,41 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Welcome from './components/Welcome'
-import {BrowserRouter as Router, Routes, Route, Link} from 'react'
-import Contact from './pages/Contact'
-
+import imageRickMorty from "./img/rickmorty.png";
+import "./App.css";
+import { useState } from "react";
+import Characters from "./components/Characters";
 
 function App() {
+  const [characters, setCharacters] = useState(null);
+
+  const reqApi = async () => {
+    const api = await fetch("https://rickandmortyapi.com/api/character");
+    const characterApi = await api.json();
+
+    setCharacters(characterApi.results); // Este result proviene de uno de los arreeglos de characters en la API.
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <Router>
-          <div>
-            <ul>
-              <li>
-                <Link to='/'>Home</Link>
-              </li>
-              <li>
-                <Link to='/contact'>Contacto</Link>
-              </li>
-
-            </ul>
-          </div>
-          <Routes>
-            <Route path='/contact' element={<Contact />}/>
-          </Routes>
-        </Router>
+      <div className="App">
+        <header className="App-header">
+          <h1 className="title">Rick & Morty</h1>
+          {characters ? (
+            <Characters characters={characters} />
+          ) : (
+            <>
+              <img
+                src={imageRickMorty}
+                alt="Rick & Morty"
+                className="img-rickmorty"
+              />
+              <button onClick={reqApi} className="btn-search">
+                Buscar Personajes
+              </button>
+            </>
+          )}
+        </header>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
